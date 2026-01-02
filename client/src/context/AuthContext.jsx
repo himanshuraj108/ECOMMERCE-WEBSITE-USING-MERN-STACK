@@ -2,6 +2,8 @@ import { createContext, useContext, useState, useEffect } from 'react';
 
 const AuthContext = createContext();
 
+const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
+
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -18,7 +20,7 @@ export const AuthProvider = ({ children }) => {
 
   const validateToken = async (token) => {
     try {
-      const response = await fetch('http://localhost:4000/api/user/validate', {
+      const response = await fetch(BACKEND_URL + '/api/user/validate', {
         headers: {
           'Authorization': `Bearer ${token}`
         }
@@ -39,7 +41,7 @@ export const AuthProvider = ({ children }) => {
 
   const login = async (email, password) => {
     try {
-      const response = await fetch('http://localhost:4000/api/user/login', {
+      const response = await fetch(BACKEND_URL + '/api/user/login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
